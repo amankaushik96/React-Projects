@@ -1,10 +1,16 @@
 {
   "streams": [
     {
-      "title": "baangdi",
-      "description": "chuuuuuuuuuuuuuuuuuu",
+      "title": "Test",
+      "description": "This is a testing case",
       "userId": "108481364426634847366",
       "id": 1
+    },
+    {
+      "title": "Zoom",
+      "description": "This is a zooming experience",
+      "userId": "108481364426634847366",
+      "id": 2
     }
   ]
 }
