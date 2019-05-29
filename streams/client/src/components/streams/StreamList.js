@@ -2,6 +2,7 @@ import React from "react";
 import { fetchStreams } from "../../actions";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
+import Loading from "../Loading";
 
 class StreamList extends React.Component {
   count = 0;
@@ -41,14 +42,17 @@ class StreamList extends React.Component {
 
   renderList() {
     this.count++;
-    if (Object.keys(this.props.streams).length === 0 && this.count > 1) {
-      return (
-        <div className="ui visible message">
-          <p>There are no streams available.</p>
-        </div>
-      );
+    if (Object.keys(this.props.streams).length === 0 && this.count === 1) {
+      return <Loading />;
+    } else if (Object.keys(this.props.streams).length === 0 && this.count > 1) {
+      if (Object.keys(this.props.streams).length === 0) {
+        return (
+          <div className="ui visible message">
+            <p>There are no streams available.</p>
+          </div>
+        );
+      }
     }
-
     return this.props.streams.map(stream => {
       return (
         <div className="item" key={stream.id}>

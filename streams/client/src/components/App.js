@@ -7,6 +7,7 @@ import StreamDelete from "./streams/StreamDelete";
 import StreamList from "./streams/StreamList";
 import Header from "./Header";
 import history from "../history";
+import Chart from "./Chart";
 
 const App = () => {
   return (
@@ -23,6 +24,9 @@ const App = () => {
           </Switch>
         </div>
       </Router>
+      <div style={{ position: "relative", top: "50px" }}>
+        <Chart />
+      </div>
     </div>
   );
 };

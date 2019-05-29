@@ -2,10 +2,12 @@ import React from "react";
 import { connect } from "react-redux";
 import { createStream } from "../../actions";
 import StreamForm from "./StreamForm";
+import { getStreamingType, Keywords } from "../../analytics/chartData";
 
 class StreamCreate extends React.Component {
-  onSubmit = formValues => {
-    this.props.createStream(formValues);
+  onSubmit = async formValues => {
+    const result = await getStreamingType(formValues);
+    this.props.createStream(result);
   };
 
   render() {
