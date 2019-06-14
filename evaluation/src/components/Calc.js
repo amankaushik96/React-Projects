@@ -84,9 +84,9 @@ class Calc extends React.Component {
             onClick={() => {
               this.setVal("X");
             }}
-            className="item"
+            className="item sym-item"
           >
-            X
+            x
           </div>
           <div
             onClick={() => {
@@ -118,7 +118,7 @@ class Calc extends React.Component {
             onClick={() => {
               this.setVal("-");
             }}
-            className="item"
+            className="item sym-item"
           >
             -
           </div>
@@ -150,7 +150,7 @@ class Calc extends React.Component {
             onClick={() => {
               this.setVal("+");
             }}
-            className="item"
+            className="item sym-item"
           >
             +
           </div>
@@ -158,7 +158,7 @@ class Calc extends React.Component {
             onClick={() => {
               this.setVal(0);
             }}
-            className="item"
+            className="item item-width-2"
           >
             0
           </div>
@@ -174,7 +174,7 @@ class Calc extends React.Component {
             onClick={() => {
               this.setVal("=");
             }}
-            className="item"
+            className="item sym-item"
           >
             =
           </div>
