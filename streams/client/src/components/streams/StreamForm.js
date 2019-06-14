@@ -1,8 +1,10 @@
 import React from "react";
-import { Field, reduxForm } from "redux-form";
+import { connect } from "react-redux";
+import { Field, reduxForm, formValueSelector } from "redux-form";
 
 class StreamForm extends React.Component {
   renderInput = ({ input, label, meta }) => {
+    console.log("input is ", input);
     const className = `field ${meta.error && meta.touched ? "error" : ""}`;
     return (
       <div className={className}>
@@ -25,6 +27,15 @@ class StreamForm extends React.Component {
 
   onSubmit = formValues => {
     this.props.onSubmit(formValues);
+  };
+
+  renderGender = ({ input }) => {
+    input.type = "radio";
+    return (
+      <div>
+        <input {...input} />
+      </div>
+    );
   };
 
   render() {
@@ -54,7 +65,54 @@ class StreamForm extends React.Component {
               name="description"
               label="Enter Description"
             />
-            <button className="ui button primary">Submit</button>
+            <label
+              style={{
+                fontSize: "20px",
+                paddingBottom: "05px"
+              }}
+              className="ui field"
+            >
+              Gender
+            </label>
+            <div>
+              <div>
+                <div style={{ float: "left", width: "10%" }}>
+                  <label style={{ paddingRight: "10px" }}>Male</label>
+                </div>
+                <div>
+                  <Field
+                    style={{ cursor: "pointer" }}
+                    component={this.renderGender}
+                    type="radio"
+                    value="male"
+                    name="gender"
+                    label="Male"
+                  />
+                </div>
+              </div>
+              <div>
+                <div style={{ float: "left", width: "10%" }}>
+                  <label style={{ paddingRight: "10px" }}>Female</label>
+                </div>
+                <div>
+                  <Field
+                    style={{ cursor: "pointer" }}
+                    component="select"
+                    name="gender"
+                    label="Female"
+                  >
+                    <option value="null" />
+                    Select
+                    <option value="#ff0000">Red</option>
+                    <option value="#00ff00">Green</option>
+                    <option value="#0000ff">Blue</option>
+                  </Field>
+                </div>
+              </div>
+            </div>
+            <button style={{ float: "right" }} className="ui button primary">
+              Submit
+            </button>
           </form>
         </div>
       </div>
@@ -63,6 +121,7 @@ class StreamForm extends React.Component {
 }
 
 const validate = formValues => {
+  console.log(formValues);
   const errors = {};
   if (!formValues.title) {
     errors.title = "Please enter a title";
