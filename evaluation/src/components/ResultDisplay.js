@@ -6,6 +6,14 @@ class ResultDisplay extends React.Component {
 
 	handleChange = e => {
 		const val = e.target.value;
+		if (this.props.val && this.props.val.length > val.length) {
+			//Backspace Detected
+			this.props.update(
+				this.props.val.substring(0, this.props.val.length - 1),
+				true
+			);
+			return;
+		}
 		const computedVal = val.substring(val.length - 1, val.length);
 		if (!isNaN(parseInt(val))) {
 			if (
@@ -20,11 +28,19 @@ class ResultDisplay extends React.Component {
 		}
 	};
 
+	handleBackSpace = e => {
+		alert(e);
+	};
+
 	render() {
 		return (
 			<div>
 				<input
 					type="text"
+					// onKeyPress={e => {
+					// 	alert('kp', e.charCode);
+					// 	this.handleBackSpace(e.keyCode);
+					// }}
 					onChange={e => {
 						this.handleChange(e);
 					}}

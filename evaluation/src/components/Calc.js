@@ -159,8 +159,9 @@ class Calc extends React.Component {
 		}
 	};
 
-	updateTextBox = val => {
-		this.setState({ textbox: '' + this.state.textbox + val });
+	updateTextBox = (val, isBack) => {
+		if (isBack) this.setState({ textbox: '' + val });
+		else this.setState({ textbox: '' + this.state.textbox + val });
 	};
 
 	render() {
