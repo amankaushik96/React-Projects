@@ -224,14 +224,7 @@ class Calc extends React.Component {
 					>
 						0
 					</div>
-					<div
-						onClick={() => {
-							this.setVal('00');
-						}}
-						className="item"
-					>
-						00
-					</div>
+					<div className="item">00</div>
 					<div
 						onClick={() => {
 							this.setVal('.');
@@ -256,14 +249,7 @@ class Calc extends React.Component {
 					>
 						AC
 					</div>
-					<div
-						onClick={() => {
-							this.setVal('/');
-						}}
-						className="item sym-item"
-					>
-						/
-					</div>
+					<div className="item sym-item">/</div>
 				</div>
 				<div className="more-menu">. . .</div>
 			</div>
