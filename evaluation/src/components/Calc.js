@@ -159,11 +159,18 @@ class Calc extends React.Component {
 		}
 	};
 
+	updateTextBox = val => {
+		this.setState({ textbox: '' + this.state.textbox + val });
+	};
+
 	render() {
 		console.log(this.state);
 		return (
 			<div className="parent-container">
-				<InputBox val={this.state.textbox} />
+				<InputBox
+					val={this.state.textbox}
+					update={this.updateTextBox}
+				/>
 				<div className="cal-parent">
 					<div
 						onClick={() => {
