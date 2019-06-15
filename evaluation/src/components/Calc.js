@@ -11,7 +11,8 @@ class Calc extends React.Component {
 			firstNum: 0,
 			isDot: false,
 			secondNum: 0,
-			curr: null
+			curr: null,
+			resultComputed: false
 		};
 	}
 	setVal = val => {
@@ -20,15 +21,34 @@ class Calc extends React.Component {
 			val !== '=' &&
 			(val !== '+' && val !== '-' && val !== 'X')
 		) {
-			if (val === '.' && this.state.textbox !== '' && !this.state.isDot) {
+			if (
+				val === '.' &&
+				this.state.textbox !== '' &&
+				!this.state.isDot &&
+				!this.state.resultComputed
+			) {
 				this.setState({
 					isDot: true,
-					textbox: '' + this.state.textbox + val
+					textbox: '' + this.state.textbox + val,
+					resultComputed: false
 				});
 			} else if (
-				(val !== '.' && val !== 0) ||
-				this.state.textbox !== ''
+				val === '.' &&
+				this.state.textbox === '' &&
+				!this.state.isDot
 			) {
+				this.setState({
+					isDot: true,
+					textbox: '0' + val,
+					resultComputed: false
+				});
+			} else if (val !== '.' && !this.state.resultComputed) {
+				if (
+					val === 0 &&
+					(this.state.textbox || this.state.textbox === 0) &&
+					this.state.textbox.toString().indexOf('0') === 0
+				)
+					return;
 				if (
 					this.state.symSelected === '+' ||
 					this.state.symSelected === 'X' ||
@@ -36,17 +56,43 @@ class Calc extends React.Component {
 				) {
 					this.setState({ secondNum: '' + this.state.textbox + val });
 				}
-				this.setState({ textbox: '' + this.state.textbox + val });
+				this.setState({
+					textbox: '' + this.state.textbox + val,
+					resultComputed: false
+				});
+			} else if (this.state.resultComputed) {
+				let textboxval = '';
+				if (val === '.') {
+					textboxval = '0.';
+				} else {
+					textboxval = val;
+				}
+				this.setState({
+					resultComputed: false,
+					isDot: false,
+					firstNum: 0,
+					secondNum: 0,
+					textbox: textboxval,
+					symSelected: null
+				});
 			}
 		} else {
 			if (val === 'AC') {
-				this.setState({ textbox: '', symSelected: null, firstNum: 0 });
+				this.setState({
+					textbox: '',
+					symSelected: null,
+					firstNum: 0,
+					secondNum: 0,
+					resultComputed: false,
+					isDot: false
+				});
 			} else if (val === '+' || val === '-' || val === 'X') {
+				this.setState({ symSelected: val });
 				if (this.state.textbox !== '') {
 					this.setState(
 						{
-							symSelected: val,
-							firstNum: parseFloat(this.state.textbox)
+							firstNum: parseFloat(this.state.textbox),
+							resultComputed: false
 						},
 						() => {
 							if (this.state.firstNum !== 0) {
@@ -55,7 +101,8 @@ class Calc extends React.Component {
 								this.setState({
 									firstNum: parseFloat(this.state.textbox),
 									textbox: '',
-									isDot: false
+									isDot: false,
+									resultComputed: false
 								});
 							}
 						}
@@ -72,22 +119,22 @@ class Calc extends React.Component {
 		const sym = this.state.symSelected;
 		let tot = 0,
 			secondNum = parseFloat(this.state.secondNum);
-		if (val === '=') {
-			if (firstNum && secondNum) {
-				if (sym === '-') {
-					tot = firstNum - secondNum;
-				} else if (sym === '+') {
-					tot = firstNum + secondNum;
-				} else {
-					tot = firstNum * secondNum;
-				}
+		if (val === '=' && this.state.firstNum && this.state.secondNum) {
+			if (sym === '-') {
+				tot = firstNum - secondNum;
+			} else if (sym === '+') {
+				tot = firstNum + secondNum;
+			} else {
+				tot = firstNum * secondNum;
 			}
 			this.setState({
 				textbox: '' + tot,
 				firstNum: tot,
-				secondNum: 0
+				secondNum: 0,
+				resultComputed: true,
+				symSelected: null
 			});
-		} else {
+		} else if (val !== '=') {
 			secondNum = parseFloat(this.state.secondNum);
 			if (secondNum) {
 				if (sym === '-') {
