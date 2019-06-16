@@ -52,6 +52,10 @@
 	background-color: #ddd;
 }
 
+.item:active {
+	background-color: #aaa;
+}
+
 .sym-item {
 	background-color: #f59a3e;
 	color: #fff;
